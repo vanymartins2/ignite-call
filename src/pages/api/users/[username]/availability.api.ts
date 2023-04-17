@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 import { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '@/src/lib/prisma'
 import dayjs from 'dayjs'
