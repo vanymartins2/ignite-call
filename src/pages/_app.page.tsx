@@ -13,7 +13,7 @@ globalStyles()
 
 export default function App({
   Component,
-  pageProps: { session, ...pageProps },
+  pageProps: { session, ...pageProps }
 }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
@@ -22,8 +22,8 @@ export default function App({
           openGraph={{
             type: 'website',
             locale: 'pt-BR',
-            url: 'https://ignite-call.rocketseat.com.br',
-            siteName: 'Ignite Call',
+            url: 'https://ignitecall.rocketseat.com.br',
+            siteName: 'Ignite Call'
           }}
         />
 
