@@ -10,7 +10,7 @@ import {
   CalendarTitle,
   CalendarActions,
   CalendarBody,
-  CalendarDay
+  CalendarDay,
 } from './styles'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '@/src/lib/axios'
@@ -71,12 +71,12 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
           month:
             String(currentDate.get('month') + 1).length === 1
               ? `0${currentDate.get('month') + 1}`
-              : currentDate.get('month') + 1
-        }
+              : currentDate.get('month') + 1,
+        },
       })
 
       return response.data
-    }
+    },
   )
 
   const calendarWeeks = useMemo(() => {
@@ -85,7 +85,7 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
     }
 
     const daysInMonthArray = Array.from({
-      length: currentDate.daysInMonth()
+      length: currentDate.daysInMonth(),
     }).map((_, i) => {
       return currentDate.set('date', i + 1)
     })
@@ -93,7 +93,7 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
     const firstWeekDay = currentDate.get('day')
 
     const previousMonthFillArray = Array.from({
-      length: firstWeekDay
+      length: firstWeekDay,
     })
       .map((_, i) => {
         return currentDate.subtract(i + 1, 'day')
@@ -102,33 +102,33 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
 
     const lastDayInCurrentMonth = currentDate.set(
       'date',
-      currentDate.daysInMonth()
+      currentDate.daysInMonth(),
     )
 
     const lastWeekDay = lastDayInCurrentMonth.get('day')
 
     const nextMonthFillArray = Array.from({
-      length: 7 - (lastWeekDay + 1)
+      length: 7 - (lastWeekDay + 1),
     }).map((_, i) => {
       return lastDayInCurrentMonth.add(i + 1, 'day')
     })
 
     const calendarDays = [
-      ...previousMonthFillArray.map(date => {
+      ...previousMonthFillArray.map((date) => {
         return { date, disabled: true }
       }),
-      ...daysInMonthArray.map(date => {
+      ...daysInMonthArray.map((date) => {
         return {
           date,
           disabled:
             date.endOf('day').isBefore(new Date()) ||
             blockedDates.blockedWeekDays.includes(date.get('day')) ||
-            blockedDates.blockedDates.includes(date.get('date'))
+            blockedDates.blockedDates.includes(date.get('date')),
         }
       }),
-      ...nextMonthFillArray.map(date => {
+      ...nextMonthFillArray.map((date) => {
         return { date, disabled: true }
-      })
+      }),
     ]
 
     const calendarWeeks = calendarDays.reduce<CalendarWeeks>(
@@ -138,13 +138,13 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
         if (isNewWeek) {
           weeks.push({
             week: i / 7 + 1,
-            days: original.slice(i, i + 7)
+            days: original.slice(i, i + 7),
           })
         }
 
         return weeks
       },
-      []
+      [],
     )
 
     return calendarWeeks
@@ -170,7 +170,7 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
       <CalendarBody>
         <thead>
           <tr>
-            {shortWeekDays.map(weekDay => (
+            {shortWeekDays.map((weekDay) => (
               <th key={weekDay}>{weekDay}</th>
             ))}
           </tr>

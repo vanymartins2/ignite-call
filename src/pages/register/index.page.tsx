@@ -17,12 +17,12 @@ const registerFormSchema = z.object({
     .string()
     .min(3, { message: 'O usuário precisa ter pelo menos 3 letras.' })
     .regex(/^([a-z\\-]+)$/i, {
-      message: 'O usuário pode ter apenas letras e hifens.'
+      message: 'O usuário pode ter apenas letras e hifens.',
     })
-    .transform(username => username.toLowerCase()),
+    .transform((username) => username.toLowerCase()),
   name: z
     .string()
-    .min(3, { message: 'O nome precisa ter pelo menos 3 letras.' })
+    .min(3, { message: 'O nome precisa ter pelo menos 3 letras.' }),
 })
 
 type RegisterFormData = z.infer<typeof registerFormSchema>
@@ -32,9 +32,9 @@ export default function Register() {
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
-    resolver: zodResolver(registerFormSchema)
+    resolver: zodResolver(registerFormSchema),
   })
 
   const router = useRouter()
@@ -49,7 +49,7 @@ export default function Register() {
     try {
       await api.post('/users', {
         name: data.name,
-        username: data.username
+        username: data.username,
       })
 
       await router.push('/register/connect-calendar')

@@ -11,7 +11,7 @@ import {
   TimePicker,
   TimePickerHeader,
   TimePickerItem,
-  TimePickerList
+  TimePickerList,
 } from './styles'
 
 interface Availability {
@@ -45,15 +45,15 @@ export function CalendarStep({ onSelectDateTime }: CalendarStepProps) {
     async () => {
       const response = await api.get(`/users/${username}/availability`, {
         params: {
-          date: selectedDateWithoutTime
-        }
+          date: selectedDateWithoutTime,
+        },
       })
 
       return response.data
     },
     {
-      enabled: !!selectedDate
-    }
+      enabled: !!selectedDate,
+    },
   )
 
   function handleSelectTime(hour: number) {
@@ -76,7 +76,7 @@ export function CalendarStep({ onSelectDateTime }: CalendarStepProps) {
           </TimePickerHeader>
 
           <TimePickerList>
-            {availability?.possibleTimes.map(hour => {
+            {availability?.possibleTimes.map((hour) => {
               return (
                 <TimePickerItem
                   key={hour}

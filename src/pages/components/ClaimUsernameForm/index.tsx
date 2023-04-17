@@ -12,9 +12,9 @@ const claimUsernameFormSchema = z.object({
     .string()
     .min(3, { message: 'O usuário precisa ter pelo menos 3 letras.' })
     .regex(/^([a-z\\-]+)$/i, {
-      message: 'O usuário pode ter apenas letras e hifens.'
+      message: 'O usuário pode ter apenas letras e hifens.',
     })
-    .transform(username => username.toLowerCase())
+    .transform((username) => username.toLowerCase()),
 })
 
 type ClaimUsernameFormData = z.infer<typeof claimUsernameFormSchema>
@@ -23,9 +23,9 @@ export function ClaimUsernameForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting },
   } = useForm<ClaimUsernameFormData>({
-    resolver: zodResolver(claimUsernameFormSchema)
+    resolver: zodResolver(claimUsernameFormSchema),
   })
 
   const router = useRouter()

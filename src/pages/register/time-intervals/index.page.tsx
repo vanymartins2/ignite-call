@@ -5,7 +5,7 @@ import {
   Heading,
   MultiStep,
   Text,
-  TextInput
+  TextInput,
 } from '@ignite-ui/react'
 import { ArrowRight } from 'phosphor-react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
@@ -24,7 +24,7 @@ import {
   IntervalInputs,
   IntervalItem,
   IntervalsContainer,
-  FormError
+  FormError,
 } from './styles'
 
 const timeIntervalsFormSchema = z.object({
@@ -34,35 +34,35 @@ const timeIntervalsFormSchema = z.object({
         weekDay: z.number().min(0).max(6),
         enabled: z.boolean(),
         startTime: z.string(),
-        endTime: z.string()
-      })
+        endTime: z.string(),
+      }),
     )
     .length(7)
-    .transform(intervals => intervals.filter(interval => interval.enabled))
-    .refine(intervals => intervals.length > 0, {
-      message: 'Você precisa selecionar pelo menos 1 dia da semana.'
+    .transform((intervals) => intervals.filter((interval) => interval.enabled))
+    .refine((intervals) => intervals.length > 0, {
+      message: 'Você precisa selecionar pelo menos 1 dia da semana.',
     })
-    .transform(intervals => {
-      return intervals.map(interval => {
+    .transform((intervals) => {
+      return intervals.map((interval) => {
         return {
           weekDay: interval.weekDay,
           startTimeInMinutes: convertTimeStringToMinutes(interval.startTime),
-          endTimeInMinutes: convertTimeStringToMinutes(interval.endTime)
+          endTimeInMinutes: convertTimeStringToMinutes(interval.endTime),
         }
       })
     })
     .refine(
-      intervals => {
+      (intervals) => {
         return intervals.every(
-          interval =>
-            interval.endTimeInMinutes - 60 >= interval.startTimeInMinutes
+          (interval) =>
+            interval.endTimeInMinutes - 60 >= interval.startTimeInMinutes,
         )
       },
       {
         message:
-          'O horário de término deve ser pelo menos 1h distante do início.'
-      }
-    )
+          'O horário de término deve ser pelo menos 1h distante do início.',
+      },
+    ),
 })
 
 type TimeIntervalsFormInput = z.input<typeof timeIntervalsFormSchema>
@@ -74,7 +74,7 @@ export default function TimeIntervals() {
     handleSubmit,
     control,
     watch,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting },
   } = useForm<TimeIntervalsFormInput>({
     resolver: zodResolver(timeIntervalsFormSchema),
     defaultValues: {
@@ -85,9 +85,9 @@ export default function TimeIntervals() {
         { weekDay: 3, enabled: true, startTime: '08:00', endTime: '18:00' },
         { weekDay: 4, enabled: true, startTime: '08:00', endTime: '18:00' },
         { weekDay: 5, enabled: true, startTime: '08:00', endTime: '18:00' },
-        { weekDay: 6, enabled: false, startTime: '08:00', endTime: '18:00' }
-      ]
-    }
+        { weekDay: 6, enabled: false, startTime: '08:00', endTime: '18:00' },
+      ],
+    },
   })
 
   const router = useRouter()
@@ -96,7 +96,7 @@ export default function TimeIntervals() {
 
   const { fields } = useFieldArray({
     control,
-    name: 'intervals'
+    name: 'intervals',
   })
 
   const intervals = watch('intervals')
@@ -105,7 +105,7 @@ export default function TimeIntervals() {
     const { intervals } = data as TimeIntervalsFormOutput
 
     await api.post('/users/time-intervals', {
-      intervals
+      intervals,
     })
 
     await router.push('/register/update-profile')
@@ -136,7 +136,7 @@ export default function TimeIntervals() {
                     control={control}
                     render={({ field }) => (
                       <Checkbox
-                        onCheckedChange={checked => {
+                        onCheckedChange={(checked) => {
                           field.onChange(checked === true)
                         }}
                         checked={field.value}
