@@ -17,7 +17,7 @@ import { api } from '@/src/lib/axios'
 import { z } from 'zod'
 import { NextSeo } from 'next-seo'
 
-import { buildNextAuthOptions } from '../../api/auth/[...nextAuth].api'
+import { buildNextAuthOptions } from '../../api/auth/[...nextauth].api'
 
 import { Container, Header } from '../styles'
 import { FormAnnotation, ProfileBox } from './styles'
